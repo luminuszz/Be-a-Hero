@@ -33,7 +33,7 @@ you can run:
 >Insominia workspace [workSpace](https://drive.google.com/open?id=1YSNlhmLGWQkRkx3DKRjuEIMpxdqCjCw2)
 
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+create your requests the app in the development mode.<br />
+ > Open [Server](https://beahero12.herokuapp.com/) to view it in the browser.
 <br />
 
