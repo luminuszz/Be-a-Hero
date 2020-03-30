@@ -34,6 +34,6 @@ you can run:
 
 
 create your requests the app in the development mode.<br />
- > Open [Server](https://beahero12.herokuapp.com/) to view it in the browser.
+ > Open [https://beahero12.herokuapp.com/](https://beahero12.herokuapp.com/) to view it in the browser.
 <br />
 
