@@ -6,6 +6,15 @@ import SessionController from './app/controllers/SessionController'
 import UserController from './app/controllers/UserController'
 import { tokenValidate } from './app/middlewares/auth'
 const routes = Router()
+routes.get('/', (req, res) =>
+  res.json({
+    message: {
+      Title: 'Hello',
+      Description:
+        'For use this api, see the docs on github -> https://github.com/luminuszz/Be-a-Hero'
+    }
+  })
+)
 
 routes.post('/login', SessionController.store)
 routes.post('/createongs', UserController.store)
