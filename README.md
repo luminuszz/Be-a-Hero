@@ -26,7 +26,7 @@ routes.delete('/incidents/:id', IncidentController.delete)
 ## Available 
 
 ### config the database in config/databaseConfig.ts
-> read  the docs [knex](http://knexjs.org/)
+> read  the knex docs on  [knex docs](http://knexjs.org/)
 
 In the project directory, you can run:
 > `yarn`
