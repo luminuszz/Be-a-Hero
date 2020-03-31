@@ -2,8 +2,26 @@
 Apoie ONG's, be a hero! 
 
 ## About
-This a basic API using typescript , express , sqlite and knex 
+This a basic API using typescript , express , sqlite and knex
 
+
+## Routes
+````
+routes.post('/login', SessionController.store)
+routes.post('/createongs', UserController.store)
+routes.use(tokenValidate)
+
+// GET
+routes.get('/ongs', UserController.index)
+routes.get('/incidents', IncidentController.index)
+routes.get('/profile', ProfilerController.index)
+// POST
+routes.post('/incidents', IncidentController.store)
+// Delete
+routes.delete('/incidents/:id', IncidentController.delete)
+
+ ````
+> obs: routes under the " tokenValidate " needs to jwt token created on login 
 
 ## Available 
 
