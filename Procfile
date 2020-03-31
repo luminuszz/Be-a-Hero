@@ -1,2 +1,3 @@
-web: yarn db:migrate,node dist/server.js
+web: yarn db:migrate
+web: node dist/server.js
 
