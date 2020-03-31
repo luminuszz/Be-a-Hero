@@ -22,6 +22,24 @@ you can run:
 > `npm install`
 > `npm start`
 
+## Usage
+ ```
+ routes.post('/login', SessionController.store)
+routes.post('/createongs', UserController.store)
+routes.use(tokenValidate)
+
+// GET
+routes.get('/ongs', UserController.index)
+routes.get('/incidents', IncidentController.index)
+routes.get('/profile', ProfilerController.index)
+// POST
+routes.post('/incidents', IncidentController.store)
+// Delete
+routes.delete('/incidents/:id', IncidentController.delete)
+
+ ```
+
+
 ## Usage example
 
 ![image](https://user-images.githubusercontent.com/48535259/77871797-95bb8780-721b-11ea-9f95-1fdca797b1d0.png)
