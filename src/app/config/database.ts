@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 export const databaseConfig = {
   client: 'pg',
   connection: {
@@ -13,5 +14,7 @@ export const databaseConfig = {
   },
 
   useNullAsDefault: true
+
 }
-// eslint-disable-next-line no-unused-vars
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0,
+pg.defaults.ssl = true
