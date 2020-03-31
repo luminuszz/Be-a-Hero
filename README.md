@@ -23,8 +23,8 @@ you can run:
 > `npm start`
 
 ## Usage
- ```
- routes.post('/login', SessionController.store)
+  ```
+routes.post('/login', SessionController.store)
 routes.post('/createongs', UserController.store)
 routes.use(tokenValidate)
 
@@ -36,9 +36,8 @@ routes.get('/profile', ProfilerController.index)
 routes.post('/incidents', IncidentController.store)
 // Delete
 routes.delete('/incidents/:id', IncidentController.delete)
-
- ```
-
+  ```
+>Obs: You need to create one Ong and login for have JWT token
 
 ## Usage example
 
