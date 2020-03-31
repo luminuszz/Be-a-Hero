@@ -11,16 +11,10 @@ This a basic API using typescript , express , sqlite and knex
 > read  the docs [knex](http://knexjs.org/)
 
 In the project directory, you can run:
-> `yarn`
+> `start`
+
+
 > `db:migrate`
-
-> `yarn start`
-<br>
-#or
-you can run: 
-
-> `npm install`
-> `npm start`
 
 ## Usage
   ```
