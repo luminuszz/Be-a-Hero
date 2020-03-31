@@ -12,7 +12,8 @@ This a basic API using typescript , express , sqlite and knex
 
 In the project directory, you can run:
 > `start`
-<br>
+
+
 > `db:migrate`
 
 ## Usage example
