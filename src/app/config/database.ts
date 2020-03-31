@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-expressions */
+import pg from 'pg'
 export const databaseConfig = {
   client: 'pg',
   connection: {
@@ -16,3 +17,4 @@ export const databaseConfig = {
   useNullAsDefault: true
 
 }
+pg.defaults.ssl = true
