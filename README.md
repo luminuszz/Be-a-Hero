@@ -31,7 +31,7 @@ routes.post('/incidents', IncidentController.store)
 // Delete
 routes.delete('/incidents/:id', IncidentController.delete)
   ```
->Obs: You need to create one Ong and login for have JWT token
+>Obs: You need to create one Ong and login for have JWT token.
 
 ## Usage example
 
