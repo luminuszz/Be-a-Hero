@@ -1,4 +1,4 @@
 export const coorsConfig = {
-  origin: 'https://beahero12.herokuapp.com',
+  origin: 'http://localhost:3000/',
   optionsSuccessStatus: 200
 }
