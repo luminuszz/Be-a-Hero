@@ -1,4 +1,4 @@
 export const coorsConfig = {
-  origin: 'http://localhost:3000',
+  origin: false,
   optionsSuccessStatus: 200
 }
