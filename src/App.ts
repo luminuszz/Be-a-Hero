@@ -13,7 +13,12 @@ class App {
   }
 
   private middlewares (): void {
-    this.express.use(cors(coorsConfig))
+    this.express.use(
+      cors({
+        origin: 'http://localhost:3000',
+        optionsSuccessStatus: 200
+      })
+    )
     this.express.use(express.json())
   }
 
