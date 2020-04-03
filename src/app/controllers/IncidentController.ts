@@ -1,8 +1,10 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/camelcase */
 import { Request, Response } from 'express'
+import jwt from 'jsonwebtoken'
 import moment from 'moment'
 
+import { authConfig } from '../config/auth'
 import { connect } from '../database/connection'
 import { IncidentInterface } from '../interfaces/IncidentInterface'
 class UserController {
@@ -28,15 +30,17 @@ class UserController {
 
   async store (req: Request, res: Response): Promise<Response> {
     const { title, description, value } = req.body
-    const ong_id = req.headers.authorization
-    const [id] = await connect<IncidentInterface>('incidents').insert({
+    const authToken = req.headers.authorization
+    const [, token] = authToken.split(' ')
+    const { id } = jwt.decode(token, authConfig.secret)
+    const response = await connect<IncidentInterface>('incidents').insert({
       title,
       description,
       value,
-      ong_id,
+      ong_id: id,
       created_at: moment().format()
     })
-    return res.json({ id })
+    return res.json(response)
   }
 
   async delete (req: Request, res: Response): Promise<Response> {
