@@ -1,4 +1,4 @@
-import cors from 'cors'
+// import cors from 'cors'
 import express from 'express'
 
 // import { coorsConfig } from './app/config/corsConfig'
@@ -13,12 +13,6 @@ class App {
   }
 
   private middlewares (): void {
-    this.express.use(
-      cors({
-        origin: 'http://localhost:3000',
-        optionsSuccessStatus: 200
-      })
-    )
     this.express.use(express.json())
   }
 
