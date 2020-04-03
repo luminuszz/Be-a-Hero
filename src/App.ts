@@ -1,7 +1,7 @@
 import cors from 'cors'
 import express from 'express'
 
-import { coorsConfig } from './app/config/corsConfig'
+// import { coorsConfig } from './app/config/corsConfig'
 import routes from './routes'
 
 class App {
