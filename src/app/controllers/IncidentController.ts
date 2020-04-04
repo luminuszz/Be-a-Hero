@@ -45,12 +45,15 @@ class UserController {
 
   async delete (req: Request, res: Response): Promise<Response> {
     const { id } = req.params
-    const ong_id = req.userId
-
+    const authToken = req.headers.authorization
+    const [, token] = authToken.split(' ')
+    const { id: ong_id } = jwt.decode(token, authConfig.secret)
+    console.log(ong_id)
     const incidents = await connect<IncidentInterface>('incidents')
       .where('id', id)
       .select('ong_id')
       .first()
+    console.log(incidents)
 
     if (incidents.ong_id !== ong_id) {
       return res.status(401).json({ messege: 'not authorization' })
