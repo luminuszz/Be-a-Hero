@@ -1,25 +1,25 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import crypto from 'crypto'
 import { Request, Response } from 'express'
 import moment from 'moment'
 
 import { connect } from '../database/connection'
 import { OngInterface } from '../interfaces/OngInterface'
-import { hashcrate } from '../providers/User'
+import DataCrypt from '../providers/DataCrypt'
+import { userStoreSchema } from '../validators/User'
 
 class UserController {
-  async index (req: Request, res: Response): Promise<Response> {
+  public async index (req: Request, res: Response): Promise<Response> {
     const ongs = await connect('ongs').select('*')
     return res.json(ongs)
   }
 
-  async store (req: Request, res: Response): Promise<Response> {
+  public async store (req: Request, res: Response): Promise<Response> {
+    if (!(await userStoreSchema.isValid(req.body))) {
+      return res.status(400).json({ message: 'Campos inválidos' })
+    }
     const { name, email, whatsapp, city, uf } = req.body
-
-    const id = await crypto.randomBytes(4).toString('HEX')
-
-    const password = await hashcrate(req.body.password)
-
+    const id = DataCrypt.randonId()
+    const password = await DataCrypt.hashCreate(req.body.password)
     await connect<OngInterface>('ongs').insert({
       id,
       name,

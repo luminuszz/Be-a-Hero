@@ -1,29 +1,26 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
 import { Request, Response, NextFunction } from 'express'
-import jwt from 'jsonwebtoken'
 
-import { authConfig } from '../config/auth'
+import { JwtServices } from '../providers/jwt'
 
 export const tokenValidate = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<Response> => {
+  const jwt = new JwtServices()
   const auth = req.headers.authorization
 
   if (!auth) {
     return res.status(401).json({ message: 'Not authorized' })
   }
-  const [, token] = auth.split(' ')
 
   try {
-    const response:any = jwt.verify(token, authConfig.secret)
-    req.userId = response.id
-
+    const response = jwt.jwtVerify(auth)
+    console.log(response)
     next()
   } catch (error) {
-    console.log(error)
     res.status(401).json({ message: 'Token invalid' })
   }
 }

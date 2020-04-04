@@ -1,27 +1,35 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/camelcase */
 import { Request, Response } from 'express'
-import jwt from 'jsonwebtoken'
 import moment from 'moment'
 
-import { authConfig } from '../config/auth'
 import { connect } from '../database/connection'
-import { IncidentInterface } from '../interfaces/IncidentInterface'
-class UserController {
-  async index (req: Request, res: Response): Promise<Response> {
-    const [count] = await connect<IncidentInterface>('incidents')
-      .count()
+import { IncidentInterface, IncidentControllerInterface } from '../interfaces/IncidentInterface'
+import { JwtServices } from '../providers/jwt'
+import { incidentStoreSchema } from '../validators/Incidents'
+
+class IndicenteController implements IncidentControllerInterface {
+  jwt: JwtServices
+  constructor () {
+    this.jwt = new JwtServices()
+  }
+
+  async index (req:Request, res:Response): Promise<Response> {
+    const [count] = await connect<IncidentInterface>('incidents').count()
 
     const { page = 1 } = req.query
     const incidents = await connect<IncidentInterface>('incidents')
       .join('ongs', 'ongs.id', '=', 'incidents.ong_id')
       .limit(5)
       .offset((page - 1) * 5)
-      .select(['incidents.*',
-        'ongs.name', 'ongs.email',
+      .select([
+        'incidents.*',
+        'ongs.name',
+        'ongs.email',
         'ongs.whatsapp',
         'ongs.city',
-        'ongs.uf'])
+        'ongs.uf'
+      ])
 
     res.header('X-Total-Count', count['count(*)'])
 
@@ -29,10 +37,12 @@ class UserController {
   }
 
   async store (req: Request, res: Response): Promise<Response> {
+    if (!(incidentStoreSchema.isValid(req.body))) {
+      return res.status(400).json('Campos inválidos')
+    }
     const { title, description, value } = req.body
     const authToken = req.headers.authorization
-    const [, token] = authToken.split(' ')
-    const { id } = jwt.decode(token, authConfig.secret)
+    const { id } = this.jwt.jwtVerify(authToken)
     const response = await connect<IncidentInterface>('incidents').insert({
       title,
       description,
@@ -46,9 +56,7 @@ class UserController {
   async delete (req: Request, res: Response): Promise<Response> {
     const { id } = req.params
     const authToken = req.headers.authorization
-    const [, token] = authToken.split(' ')
-    const { id: ong_id } = jwt.decode(token, authConfig.secret)
-    console.log(ong_id)
+    const { id: ong_id } = this.jwt.jwtVerify(authToken)
     const incidents = await connect<IncidentInterface>('incidents')
       .where('id', id)
       .select('ong_id')
@@ -66,4 +74,4 @@ class UserController {
   }
 }
 
-export default new UserController()
+export default new IndicenteController()
