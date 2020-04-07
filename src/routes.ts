@@ -16,6 +16,8 @@ routes.get('/', (req, res) =>
     }
   })
 )
+// Mobile
+routes.get('/casos', IncidentController.index)
 
 routes.post('/login', SessionController.store)
 routes.post('/createongs', UserController.store)

@@ -7,7 +7,8 @@
     "db:migrate": "knex migrate:latest",
     "db:rollback": "knex migrate:rollback",
     "db:createMigration": "knex migrate:make",
-    "start": "nodemon src/server.ts",
+    "start": "node dist/server.js",
+    "dev": "nodemon src/server.ts",
     "build": "sucrase ./src -d ./dist --transforms typescript,imports",
     "commit": "git-cz"
   },

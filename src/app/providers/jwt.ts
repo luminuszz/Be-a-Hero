@@ -13,6 +13,7 @@ interface Ireponse extends Record<string, object> {
 interface IjwtServies{
   jwtVerify(authToken:string):any
 }
+
 class JwtServices implements IjwtServies {
   private splitToken (authToken:string):string {
     const [, token] = authToken.split(' ')

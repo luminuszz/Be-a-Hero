@@ -5,16 +5,10 @@ import moment from 'moment'
 
 import { connect } from '../database/connection'
 import { IncidentInterface, IncidentControllerInterface } from '../interfaces/IncidentInterface'
-import { JwtServices } from '../providers/jwt'
+import { JwtToken } from '../providers/jwt'
 import { incidentStoreSchema } from '../validators/Incidents'
-
 class IndicenteController implements IncidentControllerInterface {
-  jwt: JwtServices
-  constructor () {
-    this.jwt = new JwtServices()
-  }
-
-  async index (req:Request, res:Response): Promise<Response> {
+  async index (req: Request, res: Response): Promise<Response> {
     const [count] = await connect<IncidentInterface>('incidents').count()
 
     const { page = 1 } = req.query
@@ -37,12 +31,14 @@ class IndicenteController implements IncidentControllerInterface {
   }
 
   async store (req: Request, res: Response): Promise<Response> {
-    if (!(incidentStoreSchema.isValid(req.body))) {
+    const jwt = new JwtToken()
+    if (!incidentStoreSchema.isValid(req.body)) {
       return res.status(400).json('Campos inválidos')
     }
     const { title, description, value } = req.body
     const authToken = req.headers.authorization
-    const { id } = this.jwt.jwtVerify(authToken)
+
+    const { id } = jwt.jwtVerify(authToken)
     const response = await connect<IncidentInterface>('incidents').insert({
       title,
       description,
@@ -54,9 +50,10 @@ class IndicenteController implements IncidentControllerInterface {
   }
 
   async delete (req: Request, res: Response): Promise<Response> {
+    const jwt = new JwtToken()
     const { id } = req.params
     const authToken = req.headers.authorization
-    const { id: ong_id } = this.jwt.jwtVerify(authToken)
+    const { id: ong_id } = jwt.jwtVerify(authToken)
     const incidents = await connect<IncidentInterface>('incidents')
       .where('id', id)
       .select('ong_id')

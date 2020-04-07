@@ -7,14 +7,8 @@ import DataCrypt from '../providers/DataCrypt'
 import { JwtToken } from '../providers/jwt'
 import { sessionSchema } from '../validators/Session'
 class SessionController implements SessionInterface {
-  jwt: JwtToken;
-  cript: typeof DataCrypt;
-  constructor () {
-    this.jwt = new JwtToken()
-    this.cript = DataCrypt
-  }
-
   async store (req: Request, res: Response): Promise<Response> {
+    const jwt = new JwtToken()
     if (!(await sessionSchema.isValid(req.body))) {
       return res.status(400).json('Campos Invalidos')
     }
@@ -29,7 +23,7 @@ class SessionController implements SessionInterface {
       return res.status(400).json({ message: 'Ongs does not exists' })
     }
 
-    if (!(await this.cript.compareHash(password, ongs.password))) {
+    if (!(await DataCrypt.compareHash(password, ongs.password))) {
       return res.status(400).json({ message: 'Invalid password' })
     }
 
@@ -38,7 +32,7 @@ class SessionController implements SessionInterface {
         email: ongs.email,
         name: ongs.name
       },
-      token: this.jwt.store(id)
+      token: jwt.store(id)
     })
   }
 }
