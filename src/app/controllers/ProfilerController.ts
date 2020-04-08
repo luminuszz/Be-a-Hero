@@ -10,7 +10,7 @@ class ProfilerController {
   public async index (req: Request, res: Response): Promise<Response> {
     const authToken = req.headers.authorization
     const [, token] = authToken.split(' ')
-    const { id } = await jwt.decode(token, authConfig.secret)
+    const { id }:any = jwt.verify(token, authConfig.secret)
     const incidents = await connect<IncidentInterface>('incidents')
       .where('ong_id', id)
       .select('*')
