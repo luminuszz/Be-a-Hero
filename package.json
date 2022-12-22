@@ -54,7 +54,7 @@
     "cors": "^2.8.5",
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "knex": "^0.20.13",
     "knex-hooks": "^0.0.8",
     "moment": "^2.24.0",
